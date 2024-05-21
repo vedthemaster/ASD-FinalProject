@@ -12,9 +12,9 @@ public class AccountService {
         accounts.add(account);
     }
 
-    public void addInterest(double interestRate) {
+    public void addInterest() {
         for (Account account : accounts) {
-            account.addInterest(interestRate);
+            account.addInterest();
         }
     }
 

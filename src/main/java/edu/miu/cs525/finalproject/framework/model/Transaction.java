@@ -3,19 +3,19 @@ package edu.miu.cs525.finalproject.framework.model;
 import java.util.Date;
 
 public class Transaction {
-    private String type;
+    private TransactionType type;
     private double amount;
     private double balanceAfterTransaction;
     private Date date;
 
-    public Transaction(String type, double amount, double balanceAfterTransaction) {
+    public Transaction(TransactionType type, double amount, double balanceAfterTransaction) {
         this.type = type;
         this.amount = amount;
         this.balanceAfterTransaction = balanceAfterTransaction;
         this.date = new Date();
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 
