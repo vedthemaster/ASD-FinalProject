@@ -7,13 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Party implements Observer {
-    protected String name;
-    protected String email;
-    protected List<Account> accounts = new ArrayList<>();
+    private String name;
+    private String email;
 
-    public Party(String name, String email) {
+    private Address address;
+    private List<Account> accounts = new ArrayList<>();
+
+    public Party(String name, String email,Address address) {
         this.name = name;
         this.email = email;
+        this.address = address;
     }
 
     public void addAccount(Account account) {
@@ -35,7 +38,7 @@ public abstract class Party implements Observer {
 
     @Override
     public void update(Account account, Transaction transaction) {
-        if (transaction.getType().equals("withdraw") && transaction.getAmount() > 400) {
+        if (transaction.getType().equals(TransactionType.WITHDRAW) && transaction.getAmount() > 400) {
             EmailService.sendEmail(email, "Large Transaction Alert", "A large withdrawal was made from your account: " + transaction.getAmount());
         }
     }

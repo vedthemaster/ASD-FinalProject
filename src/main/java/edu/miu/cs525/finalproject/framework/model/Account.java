@@ -2,56 +2,57 @@ package edu.miu.cs525.finalproject.framework.model;
 
 import edu.miu.cs525.finalproject.framework.observer.Observer;
 import edu.miu.cs525.finalproject.framework.observer.Subject;
+import edu.miu.cs525.finalproject.framework.strategy.InterestStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Account implements Subject {
-    protected String accountNumber;
-    protected double balance;
-    protected List<Transaction> transactions = new ArrayList<>();
-    protected Party customer;
-    protected List<Observer> observers = new ArrayList<>();
+    private String accountNumber;
+    private double balance;
+    private List<Transaction> transactions = new ArrayList<>();
+    private Party customer;
+    private List<Observer> observers = new ArrayList<>();
 
-    public double getMinimumPaymentRate() {
-        return minimumPaymentRate;
-    }
-
-    public double getMonthlyInterestRate() {
-        return monthlyInterestRate;
-    }
-
-    protected double monthlyInterestRate;
-    protected double minimumPaymentRate;
+    private InterestStrategy interestStrategy;
 
 
-    public Account(String accountNumber, Party customer, double initialDeposit) {
+
+
+    public Account(String accountNumber, Party customer, double initialDeposit, InterestStrategy interestStrategy) {
         this.accountNumber = accountNumber;
         this.customer = customer;
         this.balance = initialDeposit;
         if (initialDeposit > 0) {
-            transactions.add(new Transaction("initial deposit", initialDeposit, balance));
+            transactions.add(new Transaction(TransactionType.DEPOSIT, initialDeposit, balance));
         }
+        this.interestStrategy = interestStrategy;
     }
 
     public void deposit(double amount) {
         balance += amount;
-        transactions.add(new Transaction("deposit", amount, balance));
-        notifyObservers(new Transaction("deposit", amount, balance));
+        createTransaction(TransactionType.DEPOSIT, amount, balance);
+
     }
 
     public void withdraw(double amount) {
         balance -= amount;
-        transactions.add(new Transaction("withdraw", amount, balance));
-        notifyObservers(new Transaction("withdraw", amount, balance));
+        createTransaction(TransactionType.WITHDRAW, amount, balance);
     }
 
-    public void addInterest(double interestRate) {
-        double interest = balance * interestRate;
+    public void addInterest() {
+        double interest = interestStrategy.calculateInterest(this.balance);
         balance += interest;
-        transactions.add(new Transaction("interest", interest, balance));
-        notifyObservers(new Transaction("interest", interest, balance));
+        createTransaction(TransactionType.INTEREST, interest, balance);
     }
+
+    public void createTransaction(TransactionType type, double amount, double updatedBalance ) {
+        Transaction newTransaction = new Transaction(type, amount, updatedBalance);
+        transactions.add(newTransaction);
+        notifyObservers(newTransaction);
+    }
+
+
 
     public String getAccountNumber() {
         return accountNumber;
