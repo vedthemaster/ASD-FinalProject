@@ -32,7 +32,6 @@ public abstract class Account implements Subject {
     public void deposit(double amount) {
         balance += amount;
         createTransaction(TransactionType.DEPOSIT, amount, balance);
-
     }
 
     public void withdraw(double amount) {
@@ -64,6 +63,10 @@ public abstract class Account implements Subject {
 
     public List<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public Party getCustomer() {
+        return customer;
     }
 
     @Override
