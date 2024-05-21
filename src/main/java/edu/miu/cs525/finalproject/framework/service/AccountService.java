@@ -5,29 +5,12 @@ import edu.miu.cs525.finalproject.framework.model.Account;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountService {
-    private List<Account> accounts = new ArrayList<>();
-
-    public void addAccount(Account account) {
-        accounts.add(account);
-    }
-
-    public void addInterest() {
-        for (Account account : accounts) {
-            account.addInterest();
-        }
-    }
-
-    public Account findAccount(String accountNumber) {
-        for (Account account : accounts) {
-            if (account.getAccountNumber().equals(accountNumber)) {
-                return account;
-            }
-        }
-        return null;
-    }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
+public interface AccountService {
+    Account createAccount(Account account);
+    Account getAccount(String accountNumber);
+    List<Account> getAllAccounts();
+    void deposit (String accountNumber, double amount);
+    void withdraw (String accountNumber, double amount);
+    void transferFunds(String fromAccountNumber, String toAccountNumber, double amount, String description);
+    void addInterest();
 }
