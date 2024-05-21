@@ -1,4 +1,4 @@
-package edu.miu.cs525.finalproject.framework;
+package edu.miu.cs525.finalproject.framework.model;
 
 import java.util.Date;
 

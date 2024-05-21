@@ -1,4 +1,4 @@
-package edu.miu.cs525.finalproject.framework;
+package edu.miu.cs525.finalproject.framework.service;
 
 public class EmailService {
     public static void sendEmail(String to, String subject, String body) {

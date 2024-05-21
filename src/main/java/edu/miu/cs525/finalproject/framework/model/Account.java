@@ -1,9 +1,12 @@
-package edu.miu.cs525.finalproject.framework;
+package edu.miu.cs525.finalproject.framework.model;
+
+import edu.miu.cs525.finalproject.framework.observer.Observer;
+import edu.miu.cs525.finalproject.framework.observer.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Account implements Observable {
+public abstract class Account implements Subject {
     protected String accountNumber;
     protected double balance;
     protected List<Transaction> transactions = new ArrayList<>();

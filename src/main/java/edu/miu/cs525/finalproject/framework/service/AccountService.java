@@ -1,4 +1,6 @@
-package framework;
+package edu.miu.cs525.finalproject.framework.service;
+
+import edu.miu.cs525.finalproject.framework.model.Account;
 
 import java.util.ArrayList;
 import java.util.List;

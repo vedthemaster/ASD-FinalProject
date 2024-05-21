@@ -1,4 +1,7 @@
-package edu.miu.cs525.finalproject.framework;
+package edu.miu.cs525.finalproject.framework.model;
+
+import edu.miu.cs525.finalproject.framework.observer.Observer;
+import edu.miu.cs525.finalproject.framework.service.EmailService;
 
 import java.util.ArrayList;
 import java.util.List;
