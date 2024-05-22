@@ -36,6 +36,10 @@ public abstract class Party implements Observer {
         return email;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
     @Override
     public void update(Account account, Transaction transaction) {
         if (transaction.getType().equals(TransactionType.WITHDRAW) && transaction.getAmount() > 400) {
