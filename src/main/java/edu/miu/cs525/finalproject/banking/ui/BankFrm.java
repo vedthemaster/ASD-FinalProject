@@ -1,9 +1,12 @@
 package edu.miu.cs525.finalproject.banking.ui;
 
+import edu.miu.cs525.finalproject.banking.command.AccountDepositCommand;
+import edu.miu.cs525.finalproject.banking.command.AccountWithdrawCommand;
+import edu.miu.cs525.finalproject.banking.command.AddInterestCommand;
+import edu.miu.cs525.finalproject.banking.command.CreateAccountCommand;
 import edu.miu.cs525.finalproject.banking.factory.ServiceFactory;
-import edu.miu.cs525.finalproject.banking.model.Customer;
 import edu.miu.cs525.finalproject.banking.service.AccountService;
-import edu.miu.cs525.finalproject.framework.model.Address;
+import edu.miu.cs525.finalproject.framework.command.CommandInvoker;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,11 +30,13 @@ public class BankFrm extends JFrame
     BankFrm myframe;
     private Object rowdata[];
 	private AccountService accountService;
+	private CommandInvoker commandInvoker;
     
 	public BankFrm()
 	{
 		myframe = this;
 		accountService = ServiceFactory.getAccountService();
+		commandInvoker = new CommandInvoker();
 
 		setTitle("Bank Application.");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -106,7 +111,8 @@ public class BankFrm extends JFrame
 		JButton_Withdraw.addActionListener(lSymAction);
 		JButton_GenBill.addActionListener(lSymAction);
 		JButton_Addinterest.addActionListener(lSymAction);
-		
+
+		generateCommandList();
 	}
 
 	
@@ -147,6 +153,13 @@ public class BankFrm extends JFrame
 	JButton JButton_GenBill = new JButton();
 	JButton JButton_Exit = new JButton();
 
+
+	private void generateCommandList() {
+		this.commandInvoker.addCommand("ACCOUNT_DEPOSIT", new AccountDepositCommand(accountService));
+		this.commandInvoker.addCommand("ACCOUNT_WITHDRAW", new AccountWithdrawCommand(accountService));
+		this.commandInvoker.addCommand("ADD_INTEREST", new AddInterestCommand(accountService));
+		this.commandInvoker.addCommand("CREATE_ACCOUNT", new CreateAccountCommand(accountService));
+	}
 	void exitApplication()
 	{
 		try {
@@ -198,8 +211,13 @@ public class BankFrm extends JFrame
 				JButtonWithdraw_actionPerformed(event);
 			else if (object == JButton_GenBill)
 				JButtonGenerateReport_actionPerformed(event);
-			else if (object == JButton_Addinterest)
-				JButtonAddinterest_actionPerformed(event);
+			else if (object == JButton_Addinterest) {
+                try {
+                    JButtonAddinterest_actionPerformed(event);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
 			
 		}
 	}
@@ -219,7 +237,7 @@ public class BankFrm extends JFrame
 		 set the boundaries and show it 
 		*/
 		
-		JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
+		JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe, commandInvoker.getCommand("CREATE_ACCOUNT"));
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
 
@@ -236,9 +254,6 @@ public class BankFrm extends JFrame
             JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
             newaccount=false;
         }
-
-       
-        
     }
 
 	void JButtonCompAC_actionPerformed(ActionEvent event)
@@ -249,7 +264,7 @@ public class BankFrm extends JFrame
 		 show it 
 		*/
 		
-		JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe);
+		JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe, commandInvoker.getCommand("CREATE_ACCOUNT"));
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
 		
@@ -276,7 +291,7 @@ public class BankFrm extends JFrame
             String accnr = (String)model.getValueAt(selection, 0);
     	    
 		    //Show the dialog for adding deposit amount for the current mane
-		    JDialog_Deposit dep = new JDialog_Deposit(myframe,accnr);
+		    JDialog_Deposit dep = new JDialog_Deposit(myframe,accnr, commandInvoker.getCommand("ACCOUNT_DEPOSIT"));
 		    dep.setBounds(430, 15, 275, 140);
 		    dep.show();
     		
@@ -299,7 +314,7 @@ public class BankFrm extends JFrame
             String accnr = (String)model.getValueAt(selection, 0);
 
 		    //Show the dialog for adding withdraw amount for the current mane
-		    JDialog_Withdraw wd = new JDialog_Withdraw(myframe,accnr);
+		    JDialog_Withdraw wd = new JDialog_Withdraw(myframe,accnr, commandInvoker.getCommand("ACCOUNT_WITHDRAW"));
 		    wd.setBounds(430, 15, 275, 140);
 		    wd.show();
     		
@@ -323,10 +338,10 @@ public class BankFrm extends JFrame
 
 	}
 	
-	void JButtonAddinterest_actionPerformed(ActionEvent event)
-	{
+	void JButtonAddinterest_actionPerformed(ActionEvent event) throws Exception {
 		// add interest to all accounts
-		accountService.addInterest();
+//		accountService.addInterest();
+		commandInvoker.getCommand("ADD_INTEREST").execute();
 		  JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
 	    
 	}
