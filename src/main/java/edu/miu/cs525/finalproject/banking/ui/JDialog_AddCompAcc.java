@@ -176,7 +176,7 @@ public class JDialog_AddCompAcc extends JDialog
 
 
 		Address address = new Address(JTextField_STR.getText(), JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText());
-		Customer customer = new Customer(JTextField_NAME.getText(), JTextField_EM.getText(), address);
+		Customer customer = new CompanyCustomer(JTextField_NAME.getText(), JTextField_EM.getText(), address);
 		Account account = new CompanyAccount(JTextField_ACNR.getText(), customer, 0, accountInterestType, interestStrategy);
 //		accountService.createAccount(account); // goes to concrete command class
 		command.execute(account);

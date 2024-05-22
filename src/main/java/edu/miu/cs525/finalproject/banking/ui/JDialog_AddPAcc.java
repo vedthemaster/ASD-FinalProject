@@ -3,10 +3,7 @@ package edu.miu.cs525.finalproject.banking.ui;
 		A basic implementation of the JDialog class.
 */
 
-import edu.miu.cs525.finalproject.banking.model.Account;
-import edu.miu.cs525.finalproject.banking.model.AccountInterestType;
-import edu.miu.cs525.finalproject.banking.model.Customer;
-import edu.miu.cs525.finalproject.banking.model.PersonalAccount;
+import edu.miu.cs525.finalproject.banking.model.*;
 import edu.miu.cs525.finalproject.banking.model.intereststrategy.CheckingInterestStrategy;
 import edu.miu.cs525.finalproject.banking.model.intereststrategy.SavingInterestStrategy;
 import edu.miu.cs525.finalproject.banking.service.AccountService;
@@ -214,7 +211,7 @@ public class JDialog_AddPAcc extends JDialog
 
 		// create account
 		Address address = new Address(JTextField_STR.getText(), JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText());
-		Customer customer = new Customer(JTextField_NAME.getText(), JTextField_EM.getText(), address);
+		Customer customer = new IndividualCustomer(JTextField_NAME.getText(), JTextField_EM.getText(), address);
 		Account account = new PersonalAccount(JTextField_ACNR.getText(), customer, 0, accountInterestType, interestStrategy);
 //		accountService.createAccount(account);
 		command.execute(account);

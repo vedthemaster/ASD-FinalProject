@@ -19,6 +19,4 @@ public interface AccountService {
     void transferFunds(String fromAccountNumber, String toAccountNumber, double amount, String description);
 
     void addInterest();
-
-
 }
