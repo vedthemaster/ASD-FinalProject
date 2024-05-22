@@ -1,7 +1,11 @@
 package edu.miu.cs525.finalproject.creditcard.ui;
 
+import edu.miu.cs525.finalproject.creditcard.command.CreateAccountCommand;
+import edu.miu.cs525.finalproject.creditcard.command.CreditCardDepositCommand;
+import edu.miu.cs525.finalproject.creditcard.command.CreditCardChargeCommand;
 import edu.miu.cs525.finalproject.creditcard.model.CreditCard;
 import edu.miu.cs525.finalproject.creditcard.service.CreditCardServiceImpl;
+import edu.miu.cs525.finalproject.framework.command.CommandInvoker;
 import edu.miu.cs525.finalproject.framework.model.Account;
 import edu.miu.cs525.finalproject.framework.service.AccountService;
 
@@ -25,10 +29,12 @@ public class CardFrm extends javax.swing.JFrame {
     CardFrm thisframe;
     private Object rowdata[];
     private AccountService accountService;
+    private CommandInvoker commandInvoker;
 
     public CardFrm() {
         thisframe = this;
         accountService = CreditCardServiceImpl.getInstance();
+        this.commandInvoker = new CommandInvoker();
 
         setTitle("Credit-card processing Application.");
         setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
@@ -96,9 +102,15 @@ public class CardFrm extends javax.swing.JFrame {
         JButton_Deposit.addActionListener(lSymAction);
         JButton_Withdraw.addActionListener(lSymAction);
 
+        generateCommandList();
     }
 
+    private void generateCommandList() {
+        this.commandInvoker.addCommand("CREDIT_CARD_DEPOSIT", new CreditCardDepositCommand(accountService));
+        this.commandInvoker.addCommand("CREDIT_CARD_CHARGE", new CreditCardChargeCommand(accountService));
+        this.commandInvoker.addCommand("CREATE_CREDIT_CARD_ACCOUNT", new CreateAccountCommand(accountService));
 
+    }
     /*****************************************************
      * The entry point for this application.
      * Sets the Look and Feel to the System Look and Feel.
@@ -195,7 +207,7 @@ public class CardFrm extends javax.swing.JFrame {
 		 set the boundaries and show it 
 		*/
 
-        JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe);
+        JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe, commandInvoker.getCommand("CREATE_CREDIT_CARD_ACCOUNT"));
         ccac.setBounds(450, 20, 300, 380);
         ccac.show();
 
@@ -216,7 +228,7 @@ public class CardFrm extends javax.swing.JFrame {
 		 set the boundaries and show it
 		*/
 
-        JDialog_AddCompAcc ccac = new JDialog_AddCompAcc(thisframe);
+        JDialog_AddCompAcc ccac = new JDialog_AddCompAcc(thisframe, commandInvoker.getCommand("CREATE_CREDIT_CARD_ACCOUNT"));
         ccac.setBounds(450, 20, 300, 380);
         ccac.show();
 
@@ -244,7 +256,7 @@ public class CardFrm extends javax.swing.JFrame {
             String name = (String) model.getValueAt(selection, 0);
 
             //Show the dialog for adding deposit amount for the current mane
-            JDialog_Deposit dep = new JDialog_Deposit(thisframe, name);
+            JDialog_Deposit dep = new JDialog_Deposit(thisframe, name, commandInvoker.getCommand("CREDIT_CARD_DEPOSIT"));
             dep.setBounds(430, 15, 275, 140);
             dep.show();
 
@@ -269,7 +281,7 @@ public class CardFrm extends javax.swing.JFrame {
             String name = (String) model.getValueAt(selection, 0);
 
             //Show the dialog for adding withdraw amount for the current mane
-            JDialog_Withdraw wd = new JDialog_Withdraw(thisframe, name);
+            JDialog_Withdraw wd = new JDialog_Withdraw(thisframe, name, commandInvoker.getCommand("CREDIT_CARD_CHARGE"));
             wd.setBounds(430, 15, 275, 140);
             wd.show();
 
