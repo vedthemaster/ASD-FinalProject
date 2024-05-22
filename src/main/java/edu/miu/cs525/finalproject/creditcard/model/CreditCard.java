@@ -10,8 +10,6 @@ public abstract class CreditCard extends Account {
         super(accountNumber, customer, initialDeposit, interestStrategy);
     }
 
-    public abstract void charge(double amount);
-
     public abstract double getMinimumPayment();
 
     public abstract double getMonthlyInterest();

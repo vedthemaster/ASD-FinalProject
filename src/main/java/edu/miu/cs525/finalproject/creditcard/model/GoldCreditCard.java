@@ -12,11 +12,6 @@ public class GoldCreditCard extends CreditCard {
         super(accountNumber, customer, initialDeposit, interestStrategy);
     }
 
-    @Override
-    public void charge(double amount) {
-        super.withdraw(amount);
-    }
-
 
     @Override
     public double getMinimumPayment() {
