@@ -1,9 +1,9 @@
 package edu.miu.cs525.finalproject.banking.ui;
+import edu.miu.cs525.finalproject.banking.factory.*;
 import edu.miu.cs525.finalproject.banking.model.*;
 import edu.miu.cs525.finalproject.banking.model.intereststrategy.CheckingInterestStrategy;
 import edu.miu.cs525.finalproject.banking.model.intereststrategy.SavingInterestStrategy;
 import edu.miu.cs525.finalproject.banking.service.AccountService;
-import edu.miu.cs525.finalproject.banking.factory.ServiceFactory;
 import edu.miu.cs525.finalproject.framework.command.Command;
 import edu.miu.cs525.finalproject.framework.model.Address;
 import edu.miu.cs525.finalproject.framework.strategy.InterestStrategy;
@@ -174,10 +174,12 @@ public class JDialog_AddCompAcc extends JDialog
 		}
 	   parentframe.newaccount=true;
 
-
-		Address address = new Address(JTextField_STR.getText(), JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText());
-		Customer customer = new CompanyCustomer(JTextField_NAME.getText(), JTextField_EM.getText(), address);
-		Account account = new CompanyAccount(JTextField_ACNR.getText(), customer, 0, accountInterestType, interestStrategy);
+		// create factory
+		CustomerFactory customerFactory = new CompanyCustomerFactory();
+		AccountFactory accountFactory = new CompanyAccountFactory();
+		// create customer and account
+		Customer customer = customerFactory.createCustomer(JTextField_NAME.getText(), JTextField_EM.getText(), JTextField_STR.getText(), JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText());
+		Account account = accountFactory.createAccount(JTextField_ACNR.getText(), customer, 0, accountInterestType, interestStrategy);
 //		accountService.createAccount(account); // goes to concrete command class
 		command.execute(account);
 	   dispose();
