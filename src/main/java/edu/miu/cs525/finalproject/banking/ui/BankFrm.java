@@ -81,6 +81,12 @@ public class BankFrm extends JFrame
 		JButton_Addinterest.setText("Add interest");
 		JPanel1.add(JButton_Addinterest);
 		JButton_Withdraw.setBounds(468,164,96,33);
+
+		JButton_GenBill.setText("Generate Report");
+		JButton_GenBill.setActionCommand("jbutton");
+		JPanel1.add(JButton_GenBill);
+		JButton_GenBill.setBounds(468,200,96,33);
+
 		JButton_Exit.setText("Exit");
 		JPanel1.add(JButton_Exit);
 		JButton_Exit.setBounds(468,248,96,31);
@@ -98,6 +104,7 @@ public class BankFrm extends JFrame
 		JButton_CompAC.addActionListener(lSymAction);
 		JButton_Deposit.addActionListener(lSymAction);
 		JButton_Withdraw.addActionListener(lSymAction);
+		JButton_GenBill.addActionListener(lSymAction);
 		JButton_Addinterest.addActionListener(lSymAction);
 		
 	}
@@ -137,6 +144,7 @@ public class BankFrm extends JFrame
 	JButton JButton_Deposit = new JButton();
 	JButton JButton_Withdraw = new JButton();
 	JButton JButton_Addinterest= new JButton();
+	JButton JButton_GenBill = new JButton();
 	JButton JButton_Exit = new JButton();
 
 	void exitApplication()
@@ -188,6 +196,8 @@ public class BankFrm extends JFrame
 				JButtonDeposit_actionPerformed(event);
 			else if (object == JButton_Withdraw)
 				JButtonWithdraw_actionPerformed(event);
+			else if (object == JButton_GenBill)
+				JButtonGenerateReport_actionPerformed(event);
 			else if (object == JButton_Addinterest)
 				JButtonAddinterest_actionPerformed(event);
 			
@@ -303,8 +313,14 @@ public class BankFrm extends JFrame
 		       JOptionPane.showMessageDialog(JButton_Withdraw, " Account "+accnr+" : balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
 		    }
 		}
-		
-		
+	}
+
+	void JButtonGenerateReport_actionPerformed(java.awt.event.ActionEvent event)
+	{
+		JDialogGenReport billFrm = new JDialogGenReport();
+		billFrm.setBounds(450, 20, 400, 350);
+		billFrm.show();
+
 	}
 	
 	void JButtonAddinterest_actionPerformed(ActionEvent event)
