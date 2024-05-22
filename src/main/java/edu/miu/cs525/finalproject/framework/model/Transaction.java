@@ -1,18 +1,18 @@
 package edu.miu.cs525.finalproject.framework.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Transaction {
     private TransactionType type;
     private double amount;
     private double balanceAfterTransaction;
-    private Date date;
+    private LocalDateTime date;
 
     public Transaction(TransactionType type, double amount, double balanceAfterTransaction) {
         this.type = type;
         this.amount = amount;
         this.balanceAfterTransaction = balanceAfterTransaction;
-        this.date = new Date();
+        this.date = LocalDateTime.now();
     }
 
     public TransactionType getType() {
@@ -27,7 +27,7 @@ public class Transaction {
         return balanceAfterTransaction;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 }
