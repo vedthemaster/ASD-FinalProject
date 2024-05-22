@@ -3,11 +3,16 @@ package edu.miu.cs525.finalproject.banking.service.implement;
 import edu.miu.cs525.finalproject.banking.model.Account;
 import edu.miu.cs525.finalproject.banking.model.AccountInterestType;
 import edu.miu.cs525.finalproject.banking.model.AccountType;
+import edu.miu.cs525.finalproject.banking.observer.EmailSender;
 import edu.miu.cs525.finalproject.banking.repository.AccountRepository;
 import edu.miu.cs525.finalproject.banking.service.AccountService;
 import edu.miu.cs525.finalproject.framework.model.Party;
+import edu.miu.cs525.finalproject.framework.model.Transaction;
+import edu.miu.cs525.finalproject.framework.observer.Observer;
+import edu.miu.cs525.finalproject.framework.observer.Subject;
 import edu.miu.cs525.finalproject.framework.strategy.InterestStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountServiceImpl implements AccountService {
@@ -19,6 +24,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account createAccount(Account account) {
+        // register observer
+        account.addObserver(EmailSender.getInstance());
+
         accountRepository.saveAccount(account);
         return account;
     }
