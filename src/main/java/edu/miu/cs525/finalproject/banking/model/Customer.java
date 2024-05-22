@@ -6,8 +6,10 @@ import edu.miu.cs525.finalproject.framework.model.Party;
 import java.time.LocalDate;
 
 public class Customer extends Party {
-    public Customer(String name, String email, Address address) {
+    private CustomerType customerType;
+    public Customer(String name, String email, Address address, CustomerType customerType) {
         super(name, email, address);
+        this.customerType = customerType;
     }
 
     @Override
@@ -16,6 +18,7 @@ public class Customer extends Party {
                 "name='" + getName() + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", address=" + getAddress() +
+                ", customerType=" + customerType +
                 '}';
     }
 }
