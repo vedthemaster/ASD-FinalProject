@@ -12,11 +12,6 @@ public class SilverCreditCard extends CreditCard {
     }
 
     @Override
-    public void charge(double amount) {
-        super.withdraw(amount);
-    }
-
-    @Override
     public double getMinimumPayment() {
         return  MINIMUM_PAYMENT_RATE;
     }
