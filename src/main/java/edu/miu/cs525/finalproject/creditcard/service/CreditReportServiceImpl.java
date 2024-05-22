@@ -17,7 +17,7 @@ public class CreditReportServiceImpl implements ReportService {
     AccountService accountService;
 
     public CreditReportServiceImpl() {
-        this.accountService = new CreditCardServiceImpl();
+        this.accountService = CreditCardServiceImpl.getInstance();
     }
 
     @Override
@@ -43,10 +43,6 @@ public class CreditReportServiceImpl implements ReportService {
         List<Transaction> lastMonthTransactions = account.getTransactions().stream()
                 .filter(entry -> entry.getDate().getMonth().equals(thisMonth)).collect(Collectors.toList());
 
-
-//        totalCharges = account.getTransactions().stream().filter(t -> t.getType().equals(TransactionType.WITHDRAW)).mapToDouble(Transaction::getAmount).sum();
-//        totalCredits = account.getTransactions().stream().filter(t -> t.getType().equals(TransactionType.DEPOSIT)).mapToDouble(Transaction::getAmount).sum();
-
         for (Transaction e : lastMonthTransactions) {
 
             if (e.getType().equals(TransactionType.WITHDRAW)) {
@@ -63,8 +59,8 @@ public class CreditReportServiceImpl implements ReportService {
                 account.getMonthlyInterest() * (previousBalance - totalCredits);
         double totalDue = account.getMinimumPayment() * newBalance;
 
-        return account.getCustomer().getName() + ": " +
-                account.getAccountNumber() + System.lineSeparator() +
+        return account.getCustomer().getName() + ": "
+                + account.getCreditCardType() + "-" + account.getAccountNumber() + System.lineSeparator() +
                 "Last Month's balance : '" + previousBalance + "'" + System.lineSeparator() +
                 "Total Charges for this Month : '" + totalCharges + "'" + System.lineSeparator() +
                 "Total Credits for this Month : '" + totalCredits + "'" + System.lineSeparator() +

@@ -1,5 +1,6 @@
 package edu.miu.cs525.finalproject.creditcard.service;
 
+import edu.miu.cs525.finalproject.banking.observer.EmailSender;
 import edu.miu.cs525.finalproject.framework.model.Account;
 import edu.miu.cs525.finalproject.framework.service.AccountRepository;
 import edu.miu.cs525.finalproject.framework.service.AccountService;
@@ -8,6 +9,7 @@ import java.util.List;
 
 public class CreditCardServiceImpl implements AccountService {
 
+    private static CreditCardServiceImpl instance;
 
     private AccountRepository accountRepository;
 
@@ -15,8 +17,20 @@ public class CreditCardServiceImpl implements AccountService {
         this.accountRepository = new AccountRepoImpl();
     }
 
+    public static CreditCardServiceImpl getInstance() {
+        if (instance == null) {
+            synchronized (CreditCardServiceImpl.class) {
+                if (instance == null) {
+                    instance = new CreditCardServiceImpl();
+                }
+            }
+        }
+        return instance;
+    }
+
     @Override
     public Account createAccount(Account account) {
+        account.addObserver(EmailSender.getInstance());
         accountRepository.saveAccount(account);
         return account;
     }

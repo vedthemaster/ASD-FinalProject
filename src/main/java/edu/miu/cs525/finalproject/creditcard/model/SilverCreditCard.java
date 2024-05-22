@@ -7,13 +7,14 @@ public class SilverCreditCard extends CreditCard {
     private static final double MINIMUM_PAYMENT_RATE = 0.12;
     private static final double MONTHLY_INTEREST_RATE = 0.08;
 
-    public SilverCreditCard(String accountNumber, Party customer, double initialDeposit, InterestStrategy interestStrategy) {
-        super(accountNumber, customer, initialDeposit, interestStrategy);
+    public SilverCreditCard(String accountNumber, Party customer, double initialDeposit, CreditCardType creditCardType, InterestStrategy interestStrategy) {
+        super(accountNumber, customer, initialDeposit, creditCardType, interestStrategy);
     }
+
 
     @Override
     public double getMinimumPayment() {
-        return  MINIMUM_PAYMENT_RATE;
+        return MINIMUM_PAYMENT_RATE;
     }
 
     @Override
