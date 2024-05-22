@@ -66,10 +66,6 @@ public abstract class Account implements Subject {
         return transactions;
     }
 
-    public Party getCustomer() {
-        return customer;
-    }
-
     @Override
     public void addObserver(Observer observer) {
         observers.add(observer);
@@ -86,4 +82,6 @@ public abstract class Account implements Subject {
             observer.update(this, transaction);
         }
     }
+
+    public void sendEmailNotification(Transaction transaction) {}
 }

@@ -26,24 +26,7 @@ public class EmailSender implements Observer {
     @Override
     public void update(Account account, Transaction transaction) {
         if (transaction.getType() == TransactionType.DEPOSIT || transaction.getType() == TransactionType.WITHDRAW) {
-            if (account.getClass() == PersonalAccount.class) {
-                if (transaction.getAmount() > 500 || transaction.getBalanceAfterTransaction() < 0) {
-                    System.out.printf("Personal account email notification: Account %s - Date: %s - Type: %s - Amount: %,.2f\n",
-                            account.getAccountNumber(),
-                            transaction.getDate(),
-                            transaction.getType(),
-                            transaction.getAmount()
-                    );
-                }
-            } else if (account.getClass() == CompanyAccount.class) {
-                System.out.printf("Company account email notification: Account %s - Date: %s - Type: %s - Amount: %,.2f\n",
-                        account.getAccountNumber(),
-                        transaction.getDate(),
-                        transaction.getType(),
-                        transaction.getAmount()
-                );
-            }
-
+            account.sendEmailNotification(transaction);
         }
     }
 }
