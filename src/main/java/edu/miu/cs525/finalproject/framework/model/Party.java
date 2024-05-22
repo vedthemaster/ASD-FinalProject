@@ -40,10 +40,4 @@ public abstract class Party implements Observer {
         return address;
     }
 
-    @Override
-    public void update(Account account, Transaction transaction) {
-        if (transaction.getType().equals(TransactionType.WITHDRAW) && transaction.getAmount() > 400) {
-            EmailService.sendEmail(email, "Large Transaction Alert", "A large withdrawal was made from your account: " + transaction.getAmount());
-        }
-    }
 }
