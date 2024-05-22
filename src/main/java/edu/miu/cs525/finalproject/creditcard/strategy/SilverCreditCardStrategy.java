@@ -10,3 +10,4 @@ public class SilverCreditCardStrategy implements InterestStrategy {
         return balance * INTEREST_RATE;
     }
 }
+
