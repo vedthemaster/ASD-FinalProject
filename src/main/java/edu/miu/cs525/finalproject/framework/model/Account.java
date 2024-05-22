@@ -17,8 +17,6 @@ public abstract class Account implements Subject {
     private InterestStrategy interestStrategy;
 
 
-
-
     public Account(String accountNumber, Party customer, double initialDeposit, InterestStrategy interestStrategy) {
         this.accountNumber = accountNumber;
         this.customer = customer;
@@ -46,13 +44,16 @@ public abstract class Account implements Subject {
         createTransaction(TransactionType.INTEREST, interest, balance);
     }
 
-    public void createTransaction(TransactionType type, double amount, double updatedBalance ) {
+    public void createTransaction(TransactionType type, double amount, double updatedBalance) {
         Transaction newTransaction = new Transaction(type, amount, updatedBalance);
         transactions.add(newTransaction);
         notifyObservers(newTransaction);
     }
 
 
+    public Party getCustomer() {
+        return customer;
+    }
 
     public String getAccountNumber() {
         return accountNumber;
