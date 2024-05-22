@@ -313,8 +313,6 @@ public class BankFrm extends JFrame
 		       JOptionPane.showMessageDialog(JButton_Withdraw, " Account "+accnr+" : balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
 		    }
 		}
-		
-		
 	}
 
 	void JButtonGenerateReport_actionPerformed(java.awt.event.ActionEvent event)

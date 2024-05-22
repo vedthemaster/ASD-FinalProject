@@ -33,29 +33,51 @@ public class ReportServiceImpl extends ReportService {
         return report.toString();
     }
 
+//    public String generateReport(Account account) {
+//        double totalCharges = 0;
+//        double totalCredits = 0;
+//        Month thisMonth = LocalDate.now().getMonth();
+//
+//        List<Transaction> lastMonthTransactions = account
+//                .getTransactions()
+//                .stream()
+//                .filter(entry -> entry.getDate().getMonth().equals(thisMonth))
+//                .toList();
+//
+//        for (Transaction t : lastMonthTransactions) {
+//            if (t.getAmount() < 0)
+//                totalCharges += t.getAmount();
+//            else
+//                totalCredits += t.getAmount();
+//        }
+//
+//        double previousBalance = account.getBalance() - totalCredits + totalCharges;
+//
+//        return account.getCustomer().getName() + ": " +
+//                account.getAccountType()  + "-" + account.getAccountNumber() + "\n"  +
+//                "Last Month's account balance : '" + previousBalance + "'\n" +
+//                "Current Month's account balance: '" + account.getBalance() + "'" ;
+//    }
+
     public String generateReport(Account account) {
-        double totalCharges = 0;
-        double totalCredits = 0;
-        Month thisMonth = LocalDate.now().getMonth();
+        StringBuilder report = new StringBuilder();
+        report.append("Account Report\n");
+        report.append("Account Number: ").append(account.getAccountNumber()).append("\n");
+        report.append("Customer Name: ").append(account.getCustomer().getName()).append("\n");
+        report.append("Balance: ").append(account.getBalance()).append("\n");
+        report.append("Transactions:\n");
+        report.append("Date\t\t\tType\tAmount\t\tBalance\n");
 
-        List<Transaction> lastMonthTransactions = account
-                .getTransactions()
-                .stream()
-                .filter(entry -> entry.getDate().getMonth().equals(thisMonth))
-                .toList();
+        // Fetch all transactions for the account
+        List<Transaction> transactions = account.getTransactions();
 
-        for (Transaction t : lastMonthTransactions) {
-            if (t.getAmount() < 0)
-                totalCharges += t.getAmount();
-            else
-                totalCredits += t.getAmount();
+        for (Transaction transaction : transactions) {
+            report.append(transaction.getDate()).append("\t")
+                    .append(transaction.getType()).append("\t")
+                    .append(transaction.getAmount()).append("\t\t")
+                    .append(transaction.getBalanceAfterTransaction()).append("\n");
         }
 
-        double previousBalance = account.getBalance() - totalCredits + totalCharges;
-
-        return account.getCustomer().getName() + ": " +
-                account.getAccountType()  + "-" + account.getAccountNumber() + "\n"  +
-                "Last Month's account balance : '" + previousBalance + "'\n" +
-                "Current Month's account balance: '" + account.getBalance() + "'" ;
+        return report.toString();
     }
 }
