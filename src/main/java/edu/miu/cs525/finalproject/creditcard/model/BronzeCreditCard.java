@@ -12,10 +12,7 @@ public class BronzeCreditCard extends CreditCard {
         super(accountNumber, customer, initialDeposit, interestStrategy);
     }
 
-    @Override
-    public void charge(double amount) {
 
-    }
 
 
     @Override
