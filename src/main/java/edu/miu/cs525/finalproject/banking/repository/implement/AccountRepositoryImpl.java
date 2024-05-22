@@ -11,14 +11,14 @@ public class AccountRepositoryImpl implements AccountRepository {
     List<Account> accounts = new ArrayList<>();
 
     @Override
-    public void saveAccount(Account account) {
+    public void save(Account account) {
         accounts.add(account);
         printAccounts();
     }
 
     @Override
-    public void updateAccount(Account account) {
-        Account accountExist = getAccount(account.getAccountNumber());
+    public void update(Account account) {
+        Account accountExist = getOne(account.getAccountNumber());
         if (accountExist != null) {
             accounts.remove(accountExist);
             accounts.add(account);
@@ -26,7 +26,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public Account getAccount(String accountNumber) {
+    public Account getOne(String accountNumber) {
         for (Account account : accounts) {
             if (account.getAccountNumber().equals(accountNumber)) return account;
         }
@@ -34,10 +34,13 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public List<Account> getAccounts() {
+    public List<Account> getAll() {
         return accounts;
     }
-
+    @Override
+    public Account getOne(Long id) {
+        return null;
+    }
     public void printAccounts() {
         System.out.println("accounts: ");
         accounts.forEach(System.out::println);

@@ -3,6 +3,7 @@ package edu.miu.cs525.finalproject.banking.service;
 import edu.miu.cs525.finalproject.banking.model.Account;
 import edu.miu.cs525.finalproject.banking.model.AccountInterestType;
 import edu.miu.cs525.finalproject.banking.model.AccountType;
+import edu.miu.cs525.finalproject.banking.model.Customer;
 import edu.miu.cs525.finalproject.framework.model.Party;
 import edu.miu.cs525.finalproject.framework.strategy.InterestStrategy;
 
@@ -17,4 +18,5 @@ public interface AccountService {
     void withdraw (String accountNumber, double amount);
     void transferFunds(String fromAccountNumber, String toAccountNumber, double amount, String description);
     void addInterest();
+    List<Customer> getAllCustomers();
 }
