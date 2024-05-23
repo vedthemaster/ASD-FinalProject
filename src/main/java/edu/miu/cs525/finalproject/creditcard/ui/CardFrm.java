@@ -10,6 +10,8 @@ import edu.miu.cs525.finalproject.framework.model.Account;
 import edu.miu.cs525.finalproject.framework.service.AccountService;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Collection;
@@ -45,7 +47,7 @@ public class CardFrm extends javax.swing.JFrame {
         getContentPane().add(BorderLayout.CENTER, JPanel1);
         JPanel1.setBounds(0, 0, 575, 310);
 		/*
-		/Add five buttons on the pane 
+		/Add five buttons on the pane
 		/for Adding personal account, Adding company account
 		/Deposit, Withdraw and Exit from the system
 		*/
@@ -67,13 +69,13 @@ public class CardFrm extends javax.swing.JFrame {
         JTable1.setBounds(0, 0, 420, 0);
 //        rowdata = new Object[8];
 
-        JButton_NewCCAccount.setText("Add Personal Credit-card account");
+        JButton_NewCCAccount.setText("Add Personal Credit Card");
         JPanel1.add(JButton_NewCCAccount);
-        JButton_NewCCAccount.setBounds(24, 20, 192, 33);
+        JButton_NewCCAccount.setBounds(24, 20, 200, 33);
 
-        JButton_NewCompAccount.setText("Add Company Credit-card account");
+        JButton_NewCompAccount.setText("Add Company Credit Card");
         JPanel1.add(JButton_NewCompAccount);
-        JButton_NewCompAccount.setBounds(24, 50, 192, 33);
+        JButton_NewCompAccount.setBounds(24, 50, 200, 33);
 
         JButton_GenBill.setText("Generate Monthly bills");
         JButton_GenBill.setActionCommand("jbutton");
@@ -102,6 +104,16 @@ public class CardFrm extends javax.swing.JFrame {
         JButton_Deposit.addActionListener(lSymAction);
         JButton_Withdraw.addActionListener(lSymAction);
 
+        JTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting() && JTable1.getSelectedRow() != -1) {
+                    int selectedRow = JTable1.getSelectedRow();
+                    ccnumber = (String) model.getValueAt(selectedRow, 1);
+                }
+            }
+        });
+
         generateCommandList();
     }
 
@@ -111,6 +123,7 @@ public class CardFrm extends javax.swing.JFrame {
         this.commandInvoker.addCommand("CREATE_CREDIT_CARD_ACCOUNT", new CreateAccountCommand(accountService));
 
     }
+
     /*****************************************************
      * The entry point for this application.
      * Sets the Look and Feel to the System Look and Feel.
@@ -203,8 +216,8 @@ public class CardFrm extends javax.swing.JFrame {
     void JButtonNewCCAC_actionPerformed(java.awt.event.ActionEvent event) {
 		/*
 		 JDialog_AddPAcc type object is for adding personal information
-		 construct a JDialog_AddPAcc type object 
-		 set the boundaries and show it 
+		 construct a JDialog_AddPAcc type object
+		 set the boundaries and show it
 		*/
 
         JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe, commandInvoker.getCommand("CREATE_CREDIT_CARD_ACCOUNT"));
@@ -262,7 +275,7 @@ public class CardFrm extends javax.swing.JFrame {
 
             updateAccountGrid();
 
-            // compute new amount
+//             compute new amount
 //            long deposit = Long.parseLong(amountDeposit);
 //            String samount = (String) model.getValueAt(selection, 4);
 //            long currentamount = Long.parseLong(samount);
@@ -287,7 +300,6 @@ public class CardFrm extends javax.swing.JFrame {
 
             updateAccountGrid();
 
-            // compute new amount
 //            long deposit = Long.parseLong(amountDeposit);
 //            String samount = (String) model.getValueAt(selection, 4);
 //            long currentamount = Long.parseLong(samount);
@@ -296,10 +308,12 @@ public class CardFrm extends javax.swing.JFrame {
 //            if (newamount < 0) {
 //                JOptionPane.showMessageDialog(JButton_Withdraw, " " + name + " Your balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
 //            }
+
         }
 
 
     }
+
 
     private void addAccountToGrid(CreditCard account) {
         Object[] data = new Object[8];
