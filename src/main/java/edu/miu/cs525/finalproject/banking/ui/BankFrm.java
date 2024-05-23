@@ -5,12 +5,16 @@ import edu.miu.cs525.finalproject.banking.command.AccountWithdrawCommand;
 import edu.miu.cs525.finalproject.banking.command.AddInterestCommand;
 import edu.miu.cs525.finalproject.banking.command.CreateAccountCommand;
 import edu.miu.cs525.finalproject.banking.factory.ServiceFactory;
+import edu.miu.cs525.finalproject.banking.model.Account;
 import edu.miu.cs525.finalproject.banking.service.AccountService;
 import edu.miu.cs525.finalproject.framework.command.CommandInvoker;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 
@@ -337,12 +341,25 @@ public class BankFrm extends JFrame
 		billFrm.show();
 
 	}
+	void refreshTable() {
+		List<Account> accounts = accountService.getAllAccounts();
+		Map<String, Long> accountToBalance = new HashMap<>();
+		for (Account account : accounts) {
+			accountToBalance.put(account.getAccountNumber(), (long) account.getBalance());
+		}
+		System.out.println(accountToBalance);
+		for (int i = 0; i < JTable1.getRowCount(); i++) {
+			String accountNumber = (String) model.getValueAt(i, 0);
+			model.setValueAt(String.valueOf(accountToBalance.getOrDefault(accountNumber, 0L)), i, 5);
+		}
+	}
 	
 	void JButtonAddinterest_actionPerformed(ActionEvent event) throws Exception {
+		JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
 		// add interest to all accounts
 //		accountService.addInterest();
 		commandInvoker.getCommand("ADD_INTEREST").execute();
-		  JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
-	    
+
+		refreshTable();
 	}
 }
