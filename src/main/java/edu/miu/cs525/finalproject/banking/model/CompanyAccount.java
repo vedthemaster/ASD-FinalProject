@@ -10,13 +10,13 @@ public class CompanyAccount extends Account {
     }
 
 
-    @Override
-    public void sendEmailNotification(Transaction transaction) {
-        System.out.printf("Company account email notification: Account %s - Date: %s - Type: %s - Amount: %,.2f\n",
-                getAccountNumber(),
-                transaction.getDate(),
-                transaction.getType(),
-                transaction.getAmount()
-        );
-    }
+//    @Override
+//    public void sendEmailNotification(Transaction transaction) {
+//        System.out.printf("Company account email notification: Account %s - Date: %s - Type: %s - Amount: %,.2f\n",
+//                getAccountNumber(),
+//                transaction.getDate(),
+//                transaction.getType(),
+//                transaction.getAmount()
+//        );
+//    }
 }
