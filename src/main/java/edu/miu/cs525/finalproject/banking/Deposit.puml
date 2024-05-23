@@ -1,0 +1,9 @@
+@startuml
+actor Client
+Client -> AccountServiceImpl : deposit(String accountNumber, double amount)
+AccountServiceImpl -> AccountRepositoryImpl : getAccount(String accountNumber)
+AccountRepositoryImpl --> AccountServiceImpl : Account
+AccountServiceImpl -> Account : deposit(double amount)
+AccountServiceImpl -> EmailSender : sendEmail(String to, String subject, String body)
+
+@enduml

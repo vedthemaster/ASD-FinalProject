@@ -1,0 +1,12 @@
+@startuml
+actor Client
+Client -> AccountServiceImpl : generateReport()
+AccountServiceImpl -> ReportServiceImpl : generateReport()
+ReportServiceImpl -> AccountRepositoryImpl : getAllAccounts()
+AccountRepositoryImpl --> ReportServiceImpl : List<Account>
+ReportServiceImpl -> ReportGenerator : createReport(List<Account>)
+ReportGenerator --> ReportServiceImpl : Report
+ReportServiceImpl --> AccountServiceImpl : Report
+AccountServiceImpl --> Client : Report
+
+@enduml

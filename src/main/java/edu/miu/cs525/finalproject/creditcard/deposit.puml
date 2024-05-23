@@ -1,0 +1,9 @@
+@startuml
+actor Client
+Client -> CreditCardServiceImpl : deposit(String cardNumber, double amount)
+CreditCardServiceImpl -> CreditCardRepositoryImpl : getCreditCard(String cardNumber)
+CreditCardRepositoryImpl --> CreditCardServiceImpl : CreditCard
+CreditCardServiceImpl -> CreditCard : deposit(double amount)
+CreditCardServiceImpl -> EmailSender : sendEmail(String to, String subject, String body)
+
+@enduml

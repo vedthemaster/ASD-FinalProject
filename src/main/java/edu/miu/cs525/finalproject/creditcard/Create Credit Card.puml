@@ -1,0 +1,8 @@
+@startuml
+actor Client
+Client -> CreditCardServiceImpl : createCreditCard(String type, String cardNumber)
+CreditCardServiceImpl -> CreditCardFactory : createCreditCard(String type, String cardNumber)
+CreditCardFactory --> CreditCardServiceImpl : CreditCard
+CreditCardServiceImpl -> CreditCardRepositoryImpl : save(CreditCard)
+
+@enduml

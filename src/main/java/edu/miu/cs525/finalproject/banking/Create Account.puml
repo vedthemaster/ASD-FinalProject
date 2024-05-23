@@ -1,0 +1,8 @@
+@startuml
+actor Client
+Client -> AccountServiceImpl : createAccount(String type, String accountNumber)
+AccountServiceImpl -> AccountFactory : createAccount(String type, String accountNumber)
+AccountFactory --> AccountServiceImpl : Account
+AccountServiceImpl -> AccountRepositoryImpl : save(Account)
+
+@enduml

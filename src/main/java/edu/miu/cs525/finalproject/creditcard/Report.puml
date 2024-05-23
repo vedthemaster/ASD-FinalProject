@@ -1,0 +1,12 @@
+@startuml
+actor Client
+Client -> CreditCardServiceImpl : generateReport()
+CreditCardServiceImpl -> CreditReportServiceImpl : generateReport()
+CreditReportServiceImpl -> CreditCardRepositoryImpl : getAllCreditCards()
+CreditCardRepositoryImpl --> CreditReportServiceImpl : List<CreditCard>
+CreditReportServiceImpl -> ReportGenerator : createReport(List<CreditCard>)
+ReportGenerator --> CreditReportServiceImpl : Report
+CreditReportServiceImpl --> CreditCardServiceImpl : Report
+CreditCardServiceImpl --> Client : Report
+
+@enduml
