@@ -6,19 +6,17 @@ import edu.miu.cs525.finalproject.creditcard.strategy.BronzeCreditCardStrategy;
 import edu.miu.cs525.finalproject.creditcard.strategy.GoldCreditCardStrategy;
 import edu.miu.cs525.finalproject.creditcard.strategy.SilverCreditCardStrategy;
 import edu.miu.cs525.finalproject.framework.command.Command;
+import edu.miu.cs525.finalproject.framework.model.Account;
 import edu.miu.cs525.finalproject.framework.model.Address;
 import edu.miu.cs525.finalproject.framework.model.Party;
 import edu.miu.cs525.finalproject.framework.service.AccountService;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.Date;
 
 
 public class JDialog_AddCompAcc extends javax.swing.JDialog {
     private CardFrm parentframe;
     private AccountService accountService;
     private Command command;
+
 
     public JDialog_AddCompAcc(CardFrm parent, Command command) {
         super(parent);
@@ -206,27 +204,27 @@ public class JDialog_AddCompAcc extends javax.swing.JDialog {
 
         //Impl CreditCard
         Address address = new Address(JTextField_STR.getText(), JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText());
-        Party companyAccount = new CompanyAccount(JTextField_NAME.getText(), JTextField_Email.getText(), address);
+        Party companyAccount = new CompanyParty(JTextField_NAME.getText(), JTextField_Email.getText(), address);
 
-        CreditCard creditCard;
+        Account account;
 
         if (JRadioButton_Gold.isSelected()) {
             parentframe.accountType = "Gold";
-            creditCard = new GoldCreditCard(JTextField_CCNR.getText(), companyAccount, 0.0, CreditCardType.GOLD, new GoldCreditCardStrategy());
+            account = new GoldCreditCard(JTextField_CCNR.getText(), companyAccount, 0.0, CreditCardType.GOLD, new GoldCreditCardStrategy());
 
         } else {
             if (JRadioButton_Silver.isSelected()) {
                 parentframe.accountType = "Silver";
-                creditCard = new SilverCreditCard(JTextField_CCNR.getText(), companyAccount, 0.0, CreditCardType.SILVER, new SilverCreditCardStrategy());
+                account = new SilverCreditCard(JTextField_CCNR.getText(), companyAccount, 0.0, CreditCardType.SILVER, new SilverCreditCardStrategy());
             } else {
                 parentframe.accountType = "Bronze";
-                creditCard = new BronzeCreditCard(JTextField_CCNR.getText(), companyAccount, 0.0, CreditCardType.BRONZE, new BronzeCreditCardStrategy());
+                account = new BronzeCreditCard(JTextField_CCNR.getText(), companyAccount, 0.0, CreditCardType.BRONZE, new BronzeCreditCardStrategy());
             }
         }
 
 
 //        accountService.createAccount(creditCard);
-        command.execute(creditCard);
+        command.execute(account);
         parentframe.newaccount = true;
 
         dispose();

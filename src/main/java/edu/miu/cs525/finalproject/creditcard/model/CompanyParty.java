@@ -6,9 +6,9 @@ import edu.miu.cs525.finalproject.framework.model.Party;
 import edu.miu.cs525.finalproject.framework.model.Transaction;
 
 
-public class CompanyAccount extends Party {
+public class CompanyParty extends Party {
 
-    public CompanyAccount(String name, String email, Address address) {
+    public CompanyParty(String name, String email, Address address) {
         super(name, email, address);
     }
 

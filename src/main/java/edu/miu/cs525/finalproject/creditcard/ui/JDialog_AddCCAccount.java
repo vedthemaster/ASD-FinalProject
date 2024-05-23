@@ -14,7 +14,6 @@ import edu.miu.cs525.finalproject.framework.model.Account;
 import edu.miu.cs525.finalproject.framework.model.Address;
 import edu.miu.cs525.finalproject.framework.model.Party;
 import edu.miu.cs525.finalproject.framework.service.AccountService;
-import edu.miu.cs525.finalproject.framework.strategy.InterestStrategy;
 
 public class JDialog_AddCCAccount extends javax.swing.JDialog {
     private CardFrm parentframe;
@@ -47,6 +46,8 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
         JRadioButton_Silver.setActionCommand("Savings");
         getContentPane().add(JRadioButton_Silver);
         JRadioButton_Silver.setBounds(36, 36, 84, 24);
+
+
         JLabel1.setText("Name");
         getContentPane().add(JLabel1);
         JLabel1.setForeground(java.awt.Color.black);
@@ -124,6 +125,8 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
     //{{DECLARE_CONTROLS
     javax.swing.JRadioButton JRadioButton_Gold = new javax.swing.JRadioButton();
     javax.swing.JRadioButton JRadioButton_Silver = new javax.swing.JRadioButton();
+
+
     javax.swing.JLabel JLabel1 = new javax.swing.JLabel();
     javax.swing.JLabel JLabel2 = new javax.swing.JLabel();
     javax.swing.JLabel JLabel3 = new javax.swing.JLabel();
@@ -143,6 +146,7 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
     javax.swing.JRadioButton JRadioButton_Bronze = new javax.swing.JRadioButton();
     javax.swing.JLabel JLabel7 = new javax.swing.JLabel();
     javax.swing.JTextField JTextField_Email = new javax.swing.JTextField();
+
     //}}
 
 
@@ -155,7 +159,6 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
                 JRadioButtonSav_mouseClicked(event);
             else if (object == JRadioButton_Bronze)
                 JRadioButtonBronze_mouseClicked(event);
-
 
         }
     }
@@ -189,8 +192,7 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }
-            else if (object == JButton_Cancel)
+            } else if (object == JButton_Cancel)
                 JButtonCalcel_actionPerformed(event);
         }
     }
@@ -207,30 +209,32 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
 
         //Impl CreditCard
         Address address = new Address(JTextField_STR.getText(), JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText());
-        Party personalAccount = new PersonalAccount(JTextField_NAME.getText(), JTextField_Email.getText(), address);
 
-        CreditCard creditCard;
+        Party customer = new PersonalParty(JTextField_NAME.getText(), JTextField_Email.getText(), address);
+
+        Account account;
 
         if (JRadioButton_Gold.isSelected()) {
             parentframe.accountType = "Gold";
-            creditCard = new GoldCreditCard(JTextField_CCNR.getText(), personalAccount, 0.0, CreditCardType.GOLD, new GoldCreditCardStrategy());
+            account = new GoldCreditCard(JTextField_CCNR.getText(), customer, 0.0, CreditCardType.GOLD, new GoldCreditCardStrategy());
 
         } else {
             if (JRadioButton_Silver.isSelected()) {
                 parentframe.accountType = "Silver";
-                creditCard = new SilverCreditCard(JTextField_CCNR.getText(), personalAccount, 0.0, CreditCardType.SILVER, new SilverCreditCardStrategy());
+                account = new SilverCreditCard(JTextField_CCNR.getText(), customer, 0.0, CreditCardType.SILVER, new SilverCreditCardStrategy());
             } else {
                 parentframe.accountType = "Bronze";
-                creditCard = new BronzeCreditCard(JTextField_CCNR.getText(), personalAccount, 0.0, CreditCardType.BRONZE, new BronzeCreditCardStrategy());
+                account = new BronzeCreditCard(JTextField_CCNR.getText(), customer, 0.0, CreditCardType.BRONZE, new BronzeCreditCardStrategy());
             }
         }
 
 //        accountService.createAccount(creditCard);
-        command.execute(creditCard);
+        command.execute(account);
         parentframe.newaccount = true;
 
         dispose();
     }
+
 
     void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event) {
         //make this frame invisible if Cancel button is clicked
