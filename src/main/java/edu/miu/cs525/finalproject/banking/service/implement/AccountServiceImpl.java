@@ -81,7 +81,6 @@ public class AccountServiceImpl implements AccountService {
         List<Account> accounts = accountRepository.getAll();
         for (Account account : accounts) {
             account.addInterest();
-            accountRepository.update(account);
         }
     }
 
