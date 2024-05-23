@@ -241,7 +241,7 @@ public class BankFrm extends JFrame
 		 set the boundaries and show it 
 		*/
 		
-		JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe, commandInvoker.getCommand("CREATE_ACCOUNT"));
+		JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe, commandInvoker);
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
 
@@ -268,7 +268,7 @@ public class BankFrm extends JFrame
 		 show it 
 		*/
 		
-		JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe, commandInvoker.getCommand("CREATE_ACCOUNT"));
+		JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe, commandInvoker);
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
 		
@@ -295,7 +295,7 @@ public class BankFrm extends JFrame
             String accnr = (String)model.getValueAt(selection, 0);
     	    
 		    //Show the dialog for adding deposit amount for the current mane
-		    JDialog_Deposit dep = new JDialog_Deposit(myframe,accnr, commandInvoker.getCommand("ACCOUNT_DEPOSIT"));
+		    JDialog_Deposit dep = new JDialog_Deposit(myframe,accnr, commandInvoker);
 		    dep.setBounds(430, 15, 275, 140);
 		    dep.show();
     		
@@ -306,8 +306,6 @@ public class BankFrm extends JFrame
 		    long newamount=currentamount+deposit;
 		    model.setValueAt(String.valueOf(newamount),selection, 5);
 		}
-		
-		
 	}
 
 	void JButtonWithdraw_actionPerformed(ActionEvent event)
@@ -318,7 +316,7 @@ public class BankFrm extends JFrame
             String accnr = (String)model.getValueAt(selection, 0);
 
 		    //Show the dialog for adding withdraw amount for the current mane
-		    JDialog_Withdraw wd = new JDialog_Withdraw(myframe,accnr, commandInvoker.getCommand("ACCOUNT_WITHDRAW"));
+		    JDialog_Withdraw wd = new JDialog_Withdraw(myframe,accnr, commandInvoker);
 		    wd.setBounds(430, 15, 275, 140);
 		    wd.show();
     		

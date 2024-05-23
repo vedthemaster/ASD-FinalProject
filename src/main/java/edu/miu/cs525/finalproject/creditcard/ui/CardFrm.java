@@ -220,7 +220,7 @@ public class CardFrm extends javax.swing.JFrame {
 		 set the boundaries and show it
 		*/
 
-        JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe, commandInvoker.getCommand("CREATE_CREDIT_CARD_ACCOUNT"));
+        JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe, commandInvoker);
         ccac.setBounds(450, 20, 300, 380);
         ccac.show();
 
@@ -241,7 +241,7 @@ public class CardFrm extends javax.swing.JFrame {
 		 set the boundaries and show it
 		*/
 
-        JDialog_AddCompAcc ccac = new JDialog_AddCompAcc(thisframe, commandInvoker.getCommand("CREATE_CREDIT_CARD_ACCOUNT"));
+        JDialog_AddCompAcc ccac = new JDialog_AddCompAcc(thisframe, commandInvoker);
         ccac.setBounds(450, 20, 300, 380);
         ccac.show();
 
@@ -269,7 +269,7 @@ public class CardFrm extends javax.swing.JFrame {
             String name = (String) model.getValueAt(selection, 0);
 
             //Show the dialog for adding deposit amount for the current mane
-            JDialog_Deposit dep = new JDialog_Deposit(thisframe, name, commandInvoker.getCommand("CREDIT_CARD_DEPOSIT"));
+            JDialog_Deposit dep = new JDialog_Deposit(thisframe, name, commandInvoker);
             dep.setBounds(430, 15, 275, 140);
             dep.show();
 
@@ -281,10 +281,7 @@ public class CardFrm extends javax.swing.JFrame {
 //            long currentamount = Long.parseLong(samount);
 //            long newamount = currentamount + deposit;
 //            model.setValueAt(String.valueOf(newamount), selection, 4);
-
         }
-
-
     }
 
     void JButtonWithdraw_actionPerformed(java.awt.event.ActionEvent event) {
@@ -294,7 +291,7 @@ public class CardFrm extends javax.swing.JFrame {
             String name = (String) model.getValueAt(selection, 0);
 
             //Show the dialog for adding withdraw amount for the current mane
-            JDialog_Withdraw wd = new JDialog_Withdraw(thisframe, name, commandInvoker.getCommand("CREDIT_CARD_CHARGE"));
+            JDialog_Withdraw wd = new JDialog_Withdraw(thisframe, name, commandInvoker);
             wd.setBounds(430, 15, 275, 140);
             wd.show();
 
