@@ -6,4 +6,5 @@ public class IndividualCustomer extends Customer {
     public IndividualCustomer(String name, String email, Address address) {
         super(name, email, address, CustomerType.INDIVIDUAL);
     }
+
 }

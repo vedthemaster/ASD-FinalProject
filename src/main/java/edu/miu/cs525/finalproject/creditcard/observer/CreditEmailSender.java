@@ -1,21 +1,21 @@
-package edu.miu.cs525.finalproject.banking.observer;
+package edu.miu.cs525.finalproject.creditcard.observer;
 
 import edu.miu.cs525.finalproject.framework.model.Account;
 import edu.miu.cs525.finalproject.framework.model.Transaction;
 import edu.miu.cs525.finalproject.framework.model.TransactionType;
 import edu.miu.cs525.finalproject.framework.observer.Observer;
 
-public class EmailSender implements Observer {
-    private static volatile EmailSender instance;
+public class CreditEmailSender implements Observer {
+    private static volatile CreditEmailSender instance;
 
-    private EmailSender() {
+    private CreditEmailSender() {
     }
 
-    public static EmailSender getInstance() {
+    public static CreditEmailSender getInstance() {
         if (instance == null) {
-            synchronized (EmailSender.class) {
+            synchronized (CreditEmailSender.class) {
                 if (instance == null) {
-                    instance = new EmailSender();
+                    instance = new CreditEmailSender();
                 }
             }
         }
@@ -26,7 +26,7 @@ public class EmailSender implements Observer {
     @Override
     public void update(Account account, Transaction transaction) {
         if (transaction.getType() == TransactionType.DEPOSIT || transaction.getType() == TransactionType.WITHDRAW) {
-            account.sendEmailNotification(transaction);
+            account.getCustomer().sendEmailNotification(account, transaction);
         }
     }
 

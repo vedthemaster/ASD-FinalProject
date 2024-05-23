@@ -13,5 +13,18 @@ public class PersonalAccount extends Party {
         super(name, email, address);
     }
 
+    @Override
+    public void sendEmailNotification(Account account, Transaction transaction) {
+        if (transaction.getAmount() > 400 || transaction.getBalanceAfterTransaction() < 0) {
+            System.out.printf("Personal Credit account email notification: Customer %s - Date: %s - Type: %s - Amount: %,.2f\n",
+                    getName(),
+                    transaction.getDate(),
+                    transaction.getType(),
+                    transaction.getAmount()
+            );
+        }
+
+    }
+
 
 }

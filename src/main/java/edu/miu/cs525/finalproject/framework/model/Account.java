@@ -30,11 +30,13 @@ public abstract class Account implements Subject {
     public void deposit(double amount) {
         balance += amount;
         createTransaction(TransactionType.DEPOSIT, amount, balance);
+
     }
 
     public void withdraw(double amount) {
         balance -= amount;
         createTransaction(TransactionType.WITHDRAW, amount, balance);
+
     }
 
     public void addInterest() {
@@ -83,5 +85,6 @@ public abstract class Account implements Subject {
         }
     }
 
-    public void sendEmailNotification(Transaction transaction) {}
+    public void sendEmailNotification(Transaction transaction) {
+    }
 }
