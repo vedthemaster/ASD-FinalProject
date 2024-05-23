@@ -48,8 +48,7 @@ public abstract class Account implements Subject {
     public void createTransaction(TransactionType type, double amount, double updatedBalance) {
         Transaction newTransaction = new Transaction(type, amount, updatedBalance);
         transactions.add(newTransaction);
-//        notifyObservers(newTransaction);
-        customer.sendEmailNotification(this, newTransaction);
+        notifyObservers(newTransaction);
     }
 
 
@@ -86,6 +85,6 @@ public abstract class Account implements Subject {
         }
     }
 
-//    public void sendEmailNotification(Transaction transaction) {
-//    }
+    public void sendEmailNotification(Transaction transaction) {
+    }
 }

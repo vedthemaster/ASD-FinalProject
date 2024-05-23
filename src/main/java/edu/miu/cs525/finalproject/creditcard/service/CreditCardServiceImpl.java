@@ -1,6 +1,6 @@
 package edu.miu.cs525.finalproject.creditcard.service;
 
-import edu.miu.cs525.finalproject.banking.observer.EmailSender;
+import edu.miu.cs525.finalproject.creditcard.observer.CreditEmailSender;
 import edu.miu.cs525.finalproject.framework.model.Account;
 import edu.miu.cs525.finalproject.framework.service.AccountRepository;
 import edu.miu.cs525.finalproject.framework.service.AccountService;
@@ -9,9 +9,9 @@ import java.util.List;
 
 public class CreditCardServiceImpl implements AccountService {
 
-    private static CreditCardServiceImpl instance;
-
     private AccountRepository accountRepository;
+    private volatile static CreditCardServiceImpl instance;
+
 
     public CreditCardServiceImpl() {
         this.accountRepository = new AccountRepoImpl();
@@ -30,7 +30,8 @@ public class CreditCardServiceImpl implements AccountService {
 
     @Override
     public Account createAccount(Account account) {
-        account.addObserver(EmailSender.getInstance());
+        // register observer
+        account.addObserver(CreditEmailSender.getInstance());
         accountRepository.saveAccount(account);
         return account;
     }
@@ -63,13 +64,4 @@ public class CreditCardServiceImpl implements AccountService {
         }
     }
 
-    @Override
-    public void transferFunds(String fromAccountNumber, String toAccountNumber, double amount, String description) {
-
-    }
-
-    @Override
-    public void addInterest() {
-        getAllAccounts().forEach(Account::addInterest);
-    }
 }

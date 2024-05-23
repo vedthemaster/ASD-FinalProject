@@ -37,7 +37,8 @@ public abstract class Party {
     }
 
 
-    public abstract void sendEmailNotification(Account account,Transaction transaction);
+    public void sendEmailNotification(Account account, Transaction transaction) {
+    }
 
 
 }
